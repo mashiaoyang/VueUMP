@@ -1,15 +1,29 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import Layout from '@/layout'
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [
+  routes: [    
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    }
+      component: Layout,
+      redirect: '/charts-demo',
+      children: [
+        {
+          path: 'dashboard',
+          component: () => import('@/views/dashboard/index'),
+          name: 'Dashboard',
+          meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        },
+        {
+          path: 'charts-demo',
+          component: () => import('@/views/charts-demo/index'),
+          name: 'Charts',
+          meta: { title: 'Charts', icon: 'dashboard', affix: true }
+        }
+      ]
+    },
   ]
 })
